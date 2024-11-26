@@ -15,17 +15,19 @@ ReChord is a collaborative music-sharing platform where users can rate songs, al
 ## 🧑‍💻 How to Set Up the Project
 
 1. Clone the Repository
-git clone [<repository_url>](https://github.com/gregadi/ReChord.git)
+```bash
+git clone https://github.com/gregadi/ReChord.git
 cd ReChord
+```
 
-3. Frontend Setup
+2. Frontend Setup
 Navigate to the Frontend directory:
 cd Frontend
 
-Install dependencies:
+3. Install dependencies:
 npm install
 
-Start the development server:
+4. Start the development server:
 npm start
 The frontend will open automatically in your browser. If not, visit http://127.0.0.1:8080.
 
@@ -33,19 +35,19 @@ The frontend will open automatically in your browser. If not, visit http://127.0
 Navigate to the Backend directory:
 cd Backend
 
-Install dependencies:
+6. Install dependencies:
 npm install
 
-Create a .env file in the Backend directory. Add the following:
+7. Create a .env file in the Backend directory. Add the following:
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 LASTFM_API_KEY=your_lastfm_api_key
 NEWS_API_KEY=your_news_api_key
 
-Start the backend server:
+8. Start the backend server:
 node index.js
 
-Verify the backend is running:
+9. Verify the backend is running:
 Visit http://localhost:5000 in your browser.
 You should see: ReChord Backend Running.
 
