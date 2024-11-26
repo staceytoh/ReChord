@@ -67,20 +67,19 @@ You should see: ReChord Backend Running.
 
 ## 💡 Troubleshooting
 
-Missing Dependencies:
-Run 
+- Missing Dependencies:
+Run this in both the Frontend and Backend directories.
 ```bash
 npm install
 ```
-in both the Frontend and Backend directories.
 
-Port Conflicts:
+- Port Conflicts:
 Update the PORT value in the .env file in Backend.
 
-Environment Variables Missing:
+- Environment Variables Missing:
 Ensure the .env file is correctly created in the Backend directory.
 
-Tailwind CSS Not Applied:
+- Tailwind CSS Not Applied:
 Ensure Tailwind directives are included in src/index.css:
 ```bash
 @tailwind base;
@@ -88,5 +87,5 @@ Ensure Tailwind directives are included in src/index.css:
 @tailwind utilities;
 ```
 
-Node.js Version:
+- Node.js Version:
 Ensure Node.js version is >=14.x.
