@@ -1,13 +1,23 @@
+import React, { useState, useEffect } from 'react';
+
 const NewsPage = () => {
-    const [news, setNews] = React.useState([]);
+    const [news, setNews] = useState([]);
 
     // Fetch news on component mount
-    React.useEffect(() => {
-        fetch('/news')
-            .then((response) => response.json())
-            .then((data) => console.log(data))
+    useEffect(() => {
+        fetch('/news') // Adjusted to work with proxy
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Data fetched:', data); // Debugging
+                setNews(data.articles || []); // Update based on the API response
+            })
             .catch((error) => console.error('Error fetching news:', error));
-    }, []);
+    }, []);    
 
     return (
         <div className="p-4">
@@ -20,11 +30,13 @@ const NewsPage = () => {
                             className="bg-white shadow-md rounded-lg p-4"
                         >
                             <a href={article.url} target="_blank" rel="noopener noreferrer">
-                                <img
-                                    src={article.urlToImage}
-                                    alt={article.title}
-                                    className="rounded-lg mb-4"
-                                />
+                                {article.urlToImage && (
+                                    <img
+                                        src={article.urlToImage}
+                                        alt={article.title || 'News'}
+                                        className="rounded-lg mb-4"
+                                    />
+                                )}
                                 <h3 className="font-bold text-lg">{article.title}</h3>
                                 <p className="text-sm text-gray-600">{article.description}</p>
                             </a>
