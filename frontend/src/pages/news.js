@@ -5,7 +5,7 @@ const NewsPage = () => {
     React.useEffect(() => {
         fetch('/news')
             .then((response) => response.json())
-            .then((data) => setNews(data))
+            .then((data) => console.log(data))
             .catch((error) => console.error('Error fetching news:', error));
     }, []);
 
