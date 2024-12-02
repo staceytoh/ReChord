@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-color: #333549; 
+    color: #F0F0F0;
+    min-height: 100vh;
+    margin: 0;
+}
