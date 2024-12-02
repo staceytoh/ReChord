@@ -31,7 +31,7 @@ app.get('/news', async (req, res) => {
     try {
         const response = await axios.get('https://newsapi.org/v2/everything', {
             params: {
-                q: 'music', // Search for music news
+                q: 'music OR songs OR albums OR artists', // Search for specific news
                 apiKey: NEWS_API_KEY,
                 language: 'en', // Optional: Only return English articles
                 // pageSize: 100, // Optional: number of articles per request
