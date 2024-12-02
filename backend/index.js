@@ -1,4 +1,3 @@
-// Load environment variables
 require('dotenv').config();
 
 const express = require('express');
@@ -6,18 +5,12 @@ const cors = require('cors');
 const axios = require('axios');
 const app = express();
 
-// Use the PORT from environment variables or default to 5002
 const PORT = process.env.PORT || 5002;
 
 // Environment variables
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
 const spotifyClientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const NEWS_API_KEY = process.env.NEWS_API_KEY; // Access News API key
-
-// Middleware: Enable CORS
-app.use(cors());
-
-// Middleware: JSON parsing (optional if needed later)
+const NEWS_API_KEY = process.env.NEWS_API_KEY; 
 app.use(express.json());
 
 // Log the Spotify Client ID and News API key to verify they're loaded
@@ -36,23 +29,32 @@ app.get('/', (req, res) => {
 // News API route
 app.get('/news', async (req, res) => {
     try {
-        // Fetch music-related news from News API
         const response = await axios.get('https://newsapi.org/v2/everything', {
             params: {
-                q: 'music', // Query for music-related news
+                q: 'music', // Search for music news
                 apiKey: NEWS_API_KEY,
-                language: 'en',
-                pageSize: 10, // Limit to 10 articles
+                language: 'en', // Optional: Only return English articles
+                // pageSize: 100, // Optional: number of articles per request
             },
         });
 
-        // Send articles to the frontend
-        res.json(response.data.articles);
+        // Filter out articles with missing key properties
+        const filteredArticles = response.data.articles.filter(article => {
+            return (
+                article.title && 
+                article.description && 
+                article.url && 
+                article.urlToImage 
+            );
+        });
+
+        res.json(filteredArticles); // Send filtered articles to the frontend
     } catch (error) {
         console.error('Error fetching news:', error.response?.data || error.message);
         res.status(500).json({ message: 'Failed to fetch news' });
     }
 });
+
 
 // Start the server
 app.listen(PORT, () => {
