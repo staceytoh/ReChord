@@ -5,19 +5,22 @@ const NewsPage = () => {
 
     // Fetch news on component mount
     useEffect(() => {
-        fetch('/news') // Adjusted to work with proxy
+        console.log('Fetching news...');
+        fetch('/news')
             .then((response) => {
+                console.log('Response status:', response.status); // Log the response status
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
             .then((data) => {
-                console.log('Data fetched:', data); // Debugging
-                setNews(data.articles || []); // Update based on the API response
+                console.log('Data fetched:', data); // Log the fetched data
+                setNews(data || []); // Update news state
             })
             .catch((error) => console.error('Error fetching news:', error));
-    }, []);    
+    }, []);
+    
 
     return (
         <div className="p-4">
