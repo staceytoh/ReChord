@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5002;
 // Environment variables
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
 const spotifyClientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const NEWS_API_KEY = process.env.NEWS_API_KEY;
 
 // Mock data for Social Page
 let profiles = {};
@@ -25,10 +26,11 @@ app.use(cors());
 app.use(express.json());
 
 // Log environment variables to verify they're loaded
-if (spotifyClientId) {
+if (spotifyClientId && spotifyClientSecret && NEWS_API_KEY) {
     console.log(`Spotify Client ID: ${spotifyClientId}`);
+    console.log(`News API Key: Loaded`);
 } else {
-    console.error("Error: Spotify Client ID and Secret are missing in .env");
+    console.error("Error: Required environment variables are missing in .env");
 }
 
 // ----------------------------------
@@ -39,17 +41,43 @@ app.get('/', (req, res) => {
 });
 
 // ----------------------------------
+// News API Route
+// ----------------------------------
+app.get('/news', async (req, res) => {
+    try {
+        const response = await axios.get('https://newsapi.org/v2/everything', {
+            params: {
+                q: 'music OR songs OR albums OR artists',
+                apiKey: NEWS_API_KEY,
+                language: 'en',
+            },
+        });
+
+        const filteredArticles = response.data.articles.filter(article => {
+            return (
+                article.title &&
+                article.description &&
+                article.url &&
+                article.urlToImage
+            );
+        });
+
+        res.json(filteredArticles);
+    } catch (error) {
+        console.error('Error fetching news:', error.response?.data || error.message);
+        res.status(500).json({ message: 'Failed to fetch news' });
+    }
+});
+
+// ----------------------------------
 // Spotify API Endpoints
 // ----------------------------------
-
-// Fetch Spotify token with caching
 let cachedToken = null;
 let tokenExpiry = null;
 
 app.get('/spotify/token', async (req, res) => {
     const authToken = Buffer.from(`${spotifyClientId}:${spotifyClientSecret}`).toString('base64');
 
-    // Return cached token if still valid
     if (cachedToken && Date.now() < tokenExpiry) {
         return res.json({ access_token: cachedToken });
     }
@@ -75,10 +103,9 @@ app.get('/spotify/token', async (req, res) => {
     }
 });
 
-// Search Spotify albums
 app.get('/spotify/search', async (req, res) => {
     const { query } = req.query;
-    const token = req.headers.authorization?.split(' ')[1]; // Extract token from "Bearer <token>"
+    const token = req.headers.authorization?.split(' ')[1];
 
     if (!query) {
         return res.status(400).json({ message: 'Search query is required' });
@@ -99,13 +126,10 @@ app.get('/spotify/search', async (req, res) => {
 // ----------------------------------
 // Social Page API Endpoints
 // ----------------------------------
-
-// Create or update a user profile
 app.post('/api/profile/:username', (req, res) => {
     const { username } = req.params;
     const { favorites } = req.body;
 
-    // Check if the user profile exists, or create a new one
     if (!profiles[username]) {
         profiles[username] = {
             username,
@@ -117,20 +141,16 @@ app.post('/api/profile/:username', (req, res) => {
         };
     }
 
-    // Update the user's favorites
     if (favorites) {
         profiles[username].favorites = favorites;
     }
 
-    // Return the updated profile
     res.json({ message: 'Profile updated', profile: profiles[username] });
 });
 
-// Get a user profile
 app.get('/api/profile/:username', (req, res) => {
     const username = req.params.username;
 
-    // Check if the profile exists, or create a new one
     if (!profiles[username]) {
         profiles[username] = {
             username,
@@ -145,13 +165,11 @@ app.get('/api/profile/:username', (req, res) => {
     res.json(profiles[username]);
 });
 
-// Save user ratings
 app.post('/api/ratings', (req, res) => {
     ratings = { ...ratings, ...req.body };
     res.json({ message: 'Ratings saved', ratings });
 });
 
-// Get friends' favorites
 app.get('/api/favorites', (req, res) => {
     res.json(favorites);
 });
