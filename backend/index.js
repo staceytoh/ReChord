@@ -47,9 +47,10 @@ app.get('/news', async (req, res) => {
     try {
         const response = await axios.get('https://newsapi.org/v2/everything', {
             params: {
-                q: 'music OR songs OR albums OR artists',
+                q: 'music OR songs OR albums OR artists OR concerts OR bands OR genres OR playlists OR streaming OR tours OR singers OR performances OR festivals OR soundtracks OR lyrics OR producers OR composers OR DJ OR instruments OR reviews OR charts OR hits OR awards OR beats OR remixes OR streaming platforms OR audio',
                 apiKey: NEWS_API_KEY,
                 language: 'en',
+                pageSize: 100
             },
         });
 
