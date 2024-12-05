@@ -140,20 +140,23 @@ const SocialPage = () => {
                         </div>
                     )}
                     {/* Username and Info */}
+                    
                     <div>
                         {isEditing ? (
                             <input
                                 type="text"
-                                value={profile.username}
-                                onChange={(e) => handleUsernameChange(e.target.value)}
+                                value={profile.username || ''} // Fallback to an empty string if username is undefined
+                                onChange={(e) =>
+                                    setProfile((prev) => ({ ...prev, username: e.target.value }))
+                                }
                                 className="p-2 text-black rounded border"
                                 placeholder="Enter new username"
                             />
                         ) : (
                             <h1 className="text-3xl font-bold">{profile.username || 'User Profile'}</h1>
                         )}
-                        <p className="text-gray-400">{profile.following} following | {profile.followers} followers</p>
-                        <p className="text-gray-400">Account created {new Date(profile.createdAt).getFullYear()}</p>
+                        <p className="text-gray-400">{profile.following || 0} following | {profile.followers || 0} followers</p>
+                        <p className="text-gray-400">Account created {profile.createdAt ? new Date(profile.createdAt).getFullYear() : 'N/A'}</p>
                     </div>
                 </div>
                 <div className="flex items-center">
