@@ -28,7 +28,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                         to="/news"
-                        className="text-sm font-medium underline font-bold"
+                        className="text-sm font-medium hover:underline font-bold hover:text-indigo-400"
                     >
                         News
                     </Link>
