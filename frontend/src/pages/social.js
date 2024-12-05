@@ -41,13 +41,26 @@ const SocialPage = () => {
             const reader = new FileReader();
             reader.onload = () => {
                 setProfilePicture(reader.result);
-                // Save to backend
-                axios.post('/api/profile/defaultUser', { avatar: reader.result })
-                    .then((res) => setProfile(res.data.profile))
-                    .catch((err) => console.error('Error uploading profile picture:', err));
+                saveProfile({ avatar: reader.result }); // Save to backend
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    // Save profile data to backend
+    const saveProfile = (updatedData) => {
+        axios
+            .post('/api/profile/defaultUser', { ...profile, ...updatedData })
+            .then((res) => {
+                setProfile(res.data.profile); // Update frontend state with backend response
+            })
+            .catch((err) => console.error('Error saving profile:', err));
+    };
+
+    // Handle username change
+    const handleUsernameChange = (newUsername) => {
+        setProfile((prev) => ({ ...prev, username: newUsername }));
+        saveProfile({ username: newUsername });
     };
 
     // Search albums
@@ -74,22 +87,14 @@ const SocialPage = () => {
 
         const updatedFavorites = [...favorites, { ...album, rating: 0, comments: [] }];
         setFavorites(updatedFavorites);
-
-        // Save to backend
-        axios.post('/api/profile/defaultUser', { favorites: updatedFavorites })
-            .then((res) => setProfile(res.data.profile))
-            .catch((err) => console.error('Error adding to favorites:', err));
+        saveProfile({ favorites: updatedFavorites }); // Save to backend
     };
 
     // Remove album from favorites
     const handleRemoveFromFavorites = (albumId) => {
         const updatedFavorites = favorites.filter((album) => album.id !== albumId);
         setFavorites(updatedFavorites);
-
-        // Save to backend
-        axios.post('/api/profile/defaultUser', { favorites: updatedFavorites })
-            .then((res) => setProfile(res.data.profile))
-            .catch((err) => console.error('Error removing from favorites:', err));
+        saveProfile({ favorites: updatedFavorites }); // Save to backend
     };
 
     // Rate a favorite album
@@ -98,11 +103,7 @@ const SocialPage = () => {
             album.id === albumId ? { ...album, rating } : album
         );
         setFavorites(updatedFavorites);
-
-        // Save updated ratings to backend
-        axios.post('/api/profile/defaultUser', { favorites: updatedFavorites })
-            .then((res) => setProfile(res.data.profile))
-            .catch((err) => console.error('Error saving rating:', err));
+        saveProfile({ favorites: updatedFavorites }); // Save to backend
     };
 
     // Add a comment
@@ -118,57 +119,63 @@ const SocialPage = () => {
                 : album
         );
         setFavorites(updatedFavorites);
-
-        // Save updated comments to backend
-        axios.post('/api/profile/defaultUser', { favorites: updatedFavorites })
-            .then((res) => setProfile(res.data.profile))
-            .catch((err) => console.error('Error saving comment:', err));
+        saveProfile({ favorites: updatedFavorites }); // Save to backend
     };
 
     return (
         <div className="p-8" style={{ backgroundColor: '#333549', color: '#F0F0F0' }}>
-        {/* Profile Header */}
-        <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-                {/* Profile Picture */}
-                {profilePicture ? (
-                    <img
-                        src={profilePicture}
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full"
-                    />
-                ) : (
-                    <div className="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xl">P</span>
+            {/* Profile Header */}
+            <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-4">
+                    {/* Profile Picture */}
+                    {profilePicture ? (
+                        <img
+                            src={profilePicture}
+                            alt="Profile"
+                            className="w-16 h-16 rounded-full"
+                        />
+                    ) : (
+                        <div className="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xl">P</span>
+                        </div>
+                    )}
+                    {/* Username and Info */}
+                    <div>
+                        {isEditing ? (
+                            <input
+                                type="text"
+                                value={profile.username}
+                                onChange={(e) => handleUsernameChange(e.target.value)}
+                                className="p-2 text-black rounded border"
+                                placeholder="Enter new username"
+                            />
+                        ) : (
+                            <h1 className="text-3xl font-bold">{profile.username || 'User Profile'}</h1>
+                        )}
+                        <p className="text-gray-400">{profile.following} following | {profile.followers} followers</p>
+                        <p className="text-gray-400">Account created {new Date(profile.createdAt).getFullYear()}</p>
                     </div>
-                )}
-        {/* Username and Info */}
-        <div>
-            <h1 className="text-3xl font-bold">{profile.username || 'User Profile'}</h1>
-            <p className="text-gray-400">{profile.following} following | {profile.followers} followers</p>
-            <p className="text-gray-400">Account created {new Date(profile.createdAt).getFullYear()}</p>
-        </div>
-    </div>
-    <div className="flex items-center">
-        {/* File Input for Profile Picture */}
-        {isEditing && (
-            <input
-                type="file"
-                accept="image/*"
-                onChange={handleProfilePictureChange}
-                className="text-white mr-4"
-            />
-        )}
-        {/* Edit Button */}
-        <button
-            onClick={() => setIsEditing(!isEditing)}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-            {isEditing ? 'Close' : 'Edit'}
-        </button>
-    </div>
-</div>
-            
+                </div>
+                <div className="flex items-center">
+                    {/* File Input for Profile Picture */}
+                    {isEditing && (
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleProfilePictureChange}
+                            className="text-white mr-4"
+                        />
+                    )}
+                    {/* Edit Button */}
+                    <button
+                        onClick={() => setIsEditing(!isEditing)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
+                        {isEditing ? 'Close' : 'Edit'}
+                    </button>
+                </div>
+            </div>
+
             {/* Favorites Section */}
             <div className="mt-8">
                 <h2 className="text-2xl font-bold">Your Favorites</h2>
