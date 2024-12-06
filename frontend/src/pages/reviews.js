@@ -174,9 +174,9 @@ const ReviewsPage = () => {
                         className="review-image"
                     />
                     <div className="review-details">
-                        <h3>Billie Eilish - Wicked: The Hit Me Hard and Soft</h3>
+                        <h3>Billie Eilish -  Hit Me Hard and Soft</h3>
                         <p>
-                            Billie Eilish delivers a haunting yet mesmerizing experience with Wicked: The Hit Me Hard and
+                            Billie Eilish delivers a haunting yet mesmerizing experience with Hit Me Hard and
                             Soft. The album blends minimalist production with deep emotional lyrics, showcasing her
                             signature style...
                         </p>
