@@ -1,6 +1,10 @@
 import React from 'react';
 import './Reviews.css'; // Import the CSS styles
 import gnxImage from '../photos/gnx.png'; 
+import tsImage from '../photos/midnights.png'; 
+import mbImage from '../photos/wdty.png'; 
+import drakeImage from '../photos/fatd.png'; 
+import fredImage from '../photos/tendays.png'; 
 
 const ReviewsPage = () => {
     return (
@@ -8,9 +12,11 @@ const ReviewsPage = () => {
             {/* Popular Reviews Section */}
             <section className="popular-reviews">
                 <h2>Popular Reviews</h2>
+
+                {/* Kendrick Lamar's Album */}
                 <div className="review-card">
                     <img
-                        src={gnxImage} // Use the imported image
+                        src={gnxImage}
                         alt="Kendrick Lamar Album Cover"
                         className="review-image"
                     />
@@ -23,11 +29,112 @@ const ReviewsPage = () => {
                         <div className="rating">
                             <span>Rating</span>
                             <div className="stars">★★★★★</div>
-                            <p>From 10,202 Reviews</p>
+                            <p>From 6,202 Reviews</p>
                         </div>
                         <div className="genres">
                             <h4>Genres</h4>
                             <p>Modern Hip-hop, West Coast rap</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Taylor Swift's Album */}
+                <div className="review-card">
+                    <img
+                        src={tsImage}
+                        alt="Taylor Swift Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Taylor Swift - Midnight Dreams</h3>
+                        <p>
+                            Midnight Dreams takes Taylor Swift's storytelling to new heights. The album is a journey
+                            through themes of introspection, love, and the complexities of modern relationships, set
+                            against a dreamlike pop backdrop...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★☆</div>
+                            <p>From 15,784 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Dream Pop, Indie Pop</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Metro Boomin & Future's Album */}
+                <div className="review-card">
+                    <img
+                        src={mbImage}
+                        alt="Metro Boomin & Future Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Metro Boomin & Future - We Don't Trust You</h3>
+                        <p>
+                            We Don't Trust You is a bold collaboration between Metro Boomin and Future, blending dark,
+                            trap-infused beats with Future's signature storytelling about life's highs and lows...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★☆</div>
+                            <p>From 12,634 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Trap, Southern Hip-hop</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Drake's Album */}
+                <div className="review-card">
+                    <img
+                        src={drakeImage}
+                        alt="Drake Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Drake - For All the Dogs</h3>
+                        <p>
+                            For All the Dogs showcases Drake's exploration of personal growth, fame, and relationships
+                            through a mix of melodic tracks and introspective lyrics that resonate with his fans...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★☆</div>
+                            <p>From 12,458 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Hip-hop, R&B, Rap</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Fred Again's Album */}
+                <div className="review-card">
+                    <img
+                        src={fredImage}
+                        alt="Fred Again Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Fred Again - Ten Days</h3>
+                        <p>
+                            Ten Days is a heartfelt electronic album by Fred Again, blending his unique production
+                            style with personal, emotional themes that create an immersive and uplifting experience...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★★</div>
+                            <p>From 6,876 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Electronic, Ambient</p>
                         </div>
                     </div>
                 </div>
