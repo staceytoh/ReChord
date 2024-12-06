@@ -5,6 +5,9 @@ import tsImage from '../photos/midnights.png';
 import mbImage from '../photos/wdty.png'; 
 import drakeImage from '../photos/fatd.png'; 
 import fredImage from '../photos/tendays.png'; 
+import sabrinaImage from '../photos/sns.png'; 
+import billieImage from '../photos/hmhas.png'; 
+import tylerImage from '../photos/chromakopia.png'; 
 
 const ReviewsPage = () => {
     return (
@@ -135,6 +138,82 @@ const ReviewsPage = () => {
                         <div className="genres">
                             <h4>Genres</h4>
                             <p>Electronic, Ambient</p>
+                        </div>
+                    </div>
+                </div>
+                {/* Sabrina Carpenter's Album */}
+                <div className="review-card">
+                    <img
+                        src={sabrinaImage}
+                        alt="Sabrina Carpenter Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Sabrina Carpenter - Short N Sweet</h3>
+                        <p>
+                            Sabrina Carpenter charms listeners with Short N Sweet, a vibrant pop album that mixes catchy
+                            melodies with heartfelt lyrics. It's a celebration of love, self-discovery, and joy...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★☆</div>
+                            <p>From 7,643 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Pop, Electro Pop</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Billie Eilish's Album */}
+                <div className="review-card">
+                    <img
+                        src={billieImage}
+                        alt="Billie Eilish Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Billie Eilish - Wicked: The Hit Me Hard and Soft</h3>
+                        <p>
+                            Billie Eilish delivers a haunting yet mesmerizing experience with Wicked: The Hit Me Hard and
+                            Soft. The album blends minimalist production with deep emotional lyrics, showcasing her
+                            signature style...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★★</div>
+                            <p>From 11,240 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Alt Pop, Experimental</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Tyler, the Creator's Album */}
+                <div className="review-card">
+                    <img
+                        src={tylerImage}
+                        alt="Tyler, the Creator Album Cover"
+                        className="review-image"
+                    />
+                    <div className="review-details">
+                        <h3>Tyler, the Creator - Chromakopia</h3>
+                        <p>
+                            Tyler, the Creator pushes boundaries once again with Chromakopia, an experimental album
+                            filled with vivid storytelling, eclectic beats, and a bold exploration of identity and
+                            art...
+                        </p>
+                        <div className="rating">
+                            <span>Rating</span>
+                            <div className="stars">★★★★★</div>
+                            <p>From 9,752 Reviews</p>
+                        </div>
+                        <div className="genres">
+                            <h4>Genres</h4>
+                            <p>Experimental Hip-hop, Neo-Soul</p>
                         </div>
                     </div>
                 </div>
