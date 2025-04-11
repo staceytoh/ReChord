@@ -3,7 +3,7 @@ import React from 'react';
 const HomePage = () => {
     const handleLoginWithSpotify = () => {
         // Redirect to Spotify login
-        window.location.href = '/api/spotify/login'; // Replace with the correct Spotify login API endpoint
+        window.location.href = 'https://open.spotify.com/'; // Replace with the correct Spotify login API endpoint
     };
 
     return (
